@@ -1,18 +1,40 @@
----
-version: "3.9"
+name: websurfx
+
 services:
   app:
+    container_name: websurfx
     image: websurfx:latest
-    build: .
+    build:
+      context: .
+      args:
+        CACHE: no-cache
     ports:
-      - 8080:8080
-    # Uncomment the following lines if you are using the `hybrid` or `redis` caching feature.
-    # depends_on:
-    #   - redis
-    # links:
-    #   - redis
-    volumes:
-      - ./websurfx/:/etc/xdg/websurfx/
-  # Uncomment the following lines if you are using the `hybrid` or `redis` caching feature.
-  # redis:
-  #   image: redis:latest
+      - 9999:8080
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: unless-stopped
+    dns: # quad9
+      - 9.9.9.9
+      - 149.112.112.112
+      - 2620:fe::fe
+      - 2620:fe::9
+    networks:
+      - websurfx
+#   depends_on:
+#     - redis
+#   links:
+#     - redis
+# redis:
+#   container_name: websurfx-redis 
+#   image: redis:latest
+#   restart: unless-stopped
+#   network:
+#     - websurfx
+
+networks:
+  websurfx:
+    name: websurfx
+    driver: bridge

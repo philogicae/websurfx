@@ -1,7 +1,7 @@
-FROM --platform=$BUILDPLATFORM rust:1.78.0-alpine3.18 AS chef
+FROM --platform=$BUILDPLATFORM rust:1.87.0-alpine3.22 AS chef
 # We only pay the installation cost once,
 # it will be cached from the second build onwards
-RUN apk add --no-cache alpine-sdk musl-dev g++ make libcrypto3 libressl-dev upx perl build-base
+RUN apk add --no-cache alpine-sdk musl-dev g++ make openssl-dev openssl-libs-static upx perl build-base
 RUN cargo install cargo-chef --locked
 
 WORKDIR /app
@@ -38,6 +38,6 @@ RUN export ARCH=$(uname -m) \
 
 FROM --platform=$BUILDPLATFORM scratch
 COPY --from=builder /app/public/ /opt/websurfx/public/
-VOLUME ["/etc/xdg/websurfx/"]
 COPY --from=builder /usr/local/bin/websurfx /usr/local/bin/websurfx
+COPY ./websurfx/ /etc/xdg/websurfx/
 CMD ["websurfx"]

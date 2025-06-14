@@ -5,7 +5,7 @@ threads = 10 -- the amount of threads that the app will use to run (the value sh
 
 -- ### Server ###
 port = "8080" -- port on which server should be launched
-binding_ip = "127.0.0.1" --ip address on the which server should be launched.
+binding_ip = "0.0.0.0" --ip address on the which server should be launched.
 production_use = false -- whether to use production mode or not (in other words this option should be used if it is to be used to host it on the server to provide a service to a large number of users (more than one))
 -- if production_use is set to true
 -- There will be a random delay before sending the request to the search engines, this is to prevent DDoSing the upstream search engines from a large number of simultaneous requests.
@@ -34,7 +34,7 @@ client_connection_keep_alive = 120
 -- 3 - High
 -- 4 - Aggressive
 -- }}
-safe_search = 2
+safe_search = 0
 
 -- ### Website ###
 -- The different colorschemes provided are:
@@ -52,7 +52,7 @@ safe_search = 2
 -- tokyo-night
 -- tomorrow-night
 -- }}
-colorscheme = "catppuccin-mocha" -- the colorscheme name which should be used for the website theme
+colorscheme = "tokyo-night" -- the colorscheme name which should be used for the website theme
 -- The different themes provided are:
 -- {{
 -- simple
@@ -70,13 +70,13 @@ cache_expiry_time = 600 -- This option takes the expiry time of the search resul
 -- ### Search Engines ###
 upstream_search_engines = {
 	DuckDuckGo = true,
-	Searx = false,
+	Searx = true,
 	Brave = false,
 	Startpage = false,
 	LibreX = false,
 	Mojeek = false,
 	Bing = false,
-	Wikipedia = true,
+	Wikipedia = false,
 	Yahoo = false,
 } -- select the upstream search engines from which the results should be fetched.
 
